@@ -14,6 +14,8 @@ import time
 
 start = time.time()
 
+
+
 data_file_path = "data/test_large.txt"
 field_keys = [
 			'geonameid',
@@ -85,19 +87,17 @@ class GeonamesLoader:
 		num_docs = len(docs)
 		if num_docs != 0:
 			self.db.update(docs)
-			#print "inserted %d docs" % num_docs
-			sys.stdout.write(".")
-			sys.stdout.flush()
+			print "inserted %d docs" % num_docs
+			
 			self.total_inserts = self.total_inserts + num_docs
 		
 	def __del__(self):
 		shutil.rmtree(self.cache_dir)	
-	
+
 geonames_loader = GeonamesLoader()
 
-sys.stdout.write("Loading data...")
-sys.stdout.flush()
+print "Loading data..."
 geonames_loader.load_data(data_file_path, field_keys)
-sys.stdout.write("done. ")
+print "..... done."
 
 print "Loaded ",geonames_loader.total_inserts," docs in ", time.time() - start, "seconds."
